@@ -10,7 +10,7 @@ FONT = ("Raleway", 9, "bold")
 
 
 # Add passwords to data.txt
-def add_password(*args):
+def add_password():
     website = website_input.get()
     email_username = email_username_input.get()
     password = password_input.get()
