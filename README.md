@@ -12,6 +12,6 @@ Pandas <br/>
 Tkinter<br/>
 
 ### <u>**Project:**</u> <br/>
-Pomodoro Technique Project<br/>
+Password Manger Project<br/>
 100 Days of Code - The Complete Python Pro Bootcamp 2021 <br/>
 Day 29 - Intermediate - Building a Password Manager GUI App with Tkinter
