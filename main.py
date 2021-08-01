@@ -1,5 +1,47 @@
-# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+# Libraries
+from tkinter import *
+import pandas as pd
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
 
-# ---------------------------- UI SETUP ------------------------------- #
+# Colors
+WHITE = "#F9F9F9"
+RED = "#c0392b"
+
+# Font Family
+FONT = ("Raleway", 9, "bold")
+
+# Root object definition
+root = Tk()
+root.title("Password Manager")
+root.config(padx=40, pady=40, bg=WHITE)
+root.resizable(width=False, height=False)
+
+# Canvas object definition
+canvas = Canvas(width=200, height=200, bg=WHITE, highlightthickness=0)
+logo = PhotoImage(file="logo.png")
+canvas.create_image(100, 100, image=logo)
+canvas.grid(row=0, column=1)
+
+# Widgets
+website_label = Label(text="Website:", font=FONT, bg=WHITE, fg=RED)
+website_input = Entry(width=51, highlightbackground=RED, highlightthickness=1)
+email_username_label = Label(text="Email/Username:", font=FONT, bg=WHITE, fg=RED)
+email_input = Entry(width=51, highlightbackground=RED, highlightthickness=1)
+password_label = Label(text="Password:", font=FONT, bg=WHITE, fg=RED)
+password_input = Entry(width=28, highlightbackground=RED, highlightthickness=1)
+pass_gen_button = Button(text="Generate Password", font=("Raleway", 9, "bold"), fg="white", bg=RED)
+add_button = Button(text="Add Password", font=("Raleway", 9, "bold"), bg=RED, fg="white", width=43)
+
+
+# Grids
+website_label.grid(row=1, column=0)
+website_input.grid(row=1, column=1, columnspan=2, sticky="e", pady=2)
+email_username_label.grid(row=2, column=0)
+email_input.grid(row=2, column=1, columnspan=2, sticky="e", pady=2)
+password_label.grid(row=3, column=0)
+password_input.grid(row=3, column=1)
+pass_gen_button.grid(row=3, column=2, sticky="e", pady=2)
+add_button.grid(row=4, column=0, columnspan=3, sticky="e", pady=2)
+
+# Root mainloop
+root.mainloop()
