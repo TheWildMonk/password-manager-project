@@ -15,13 +15,13 @@ FONT = ("Raleway", 9, "bold")
 def generate_password():
     random_password = Password().create_password()
     if password_input.get() == "":
-        password_input.insert(0, f"{random_password}")
-        pass_gen_button.clipboard_append(f"{random_password}")
+        password_input.insert(0, random_password)
+        pass_gen_button.clipboard_append(random_password)
     else:
         password_input.delete(0, END)
         pass_gen_button.clipboard_clear()
-        password_input.insert(0, f"{random_password}")
-        pass_gen_button.clipboard_append(f"{random_password}")
+        password_input.insert(0, random_password)
+        pass_gen_button.clipboard_append(random_password)
 
 
 # Add passwords to data.txt
@@ -40,7 +40,7 @@ def add_password():
             website_input.delete(0, END)
             password_input.delete(0, END)
     else:
-        messagebox.showerror(title="Incorrect information", message="Please don't leave any fields empty.")
+        messagebox.showerror(title="Insufficient information", message="Please don't leave any fields empty")
 
 
 # Root object definition

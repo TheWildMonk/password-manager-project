@@ -14,11 +14,9 @@ class Password:
         self.nr_numbers = random.randint(2, 4)
 
     def create_password(self):
-        password = ""
         password_list = [random.choice(self.letters) for _ in range(self.nr_letters)]
         password_list += [random.choice(self.numbers) for _ in range(self.nr_numbers)]
         password_list += [random.choice(self.symbols) for _ in range(self.nr_symbols)]
         random.shuffle(password_list)
-        for char in password_list:
-            password += char
+        password = "".join(password_list)
         return password
