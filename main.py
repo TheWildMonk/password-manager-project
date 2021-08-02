@@ -38,6 +38,8 @@ def add_password():
             with open("data.txt", mode="a") as data:
                 data.write(f"{website} | {email_username} | {password}\n")
             website_input.delete(0, END)
+            email_username_input.delete(0, END)
+            email_username_input.insert(0, "demo@email.com")
             password_input.delete(0, END)
     else:
         messagebox.showerror(title="Insufficient information", message="Please don't leave any fields empty")
