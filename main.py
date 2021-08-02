@@ -1,5 +1,7 @@
 # Libraries
 from tkinter import *
+from tkinter import messagebox
+from password import Password
 
 # Colors
 WHITE = "#F9F9F9"
@@ -9,15 +11,36 @@ RED = "#c0392b"
 FONT = ("Raleway", 9, "bold")
 
 
+# Generate random password
+def generate_password():
+    random_password = Password().create_password()
+    if password_input.get() == "":
+        password_input.insert(0, f"{random_password}")
+        pass_gen_button.clipboard_append(f"{random_password}")
+    else:
+        password_input.delete(0, END)
+        pass_gen_button.clipboard_clear()
+        password_input.insert(0, f"{random_password}")
+        pass_gen_button.clipboard_append(f"{random_password}")
+
+
 # Add passwords to data.txt
 def add_password():
     website = website_input.get()
     email_username = email_username_input.get()
     password = password_input.get()
-    with open("data.txt", mode="a") as data:
-        data.write(f"{website} | {email_username} | {password}\n")
-    website_input.delete(0, END)
-    password_input.delete(0, END)
+
+    if website != "" and email_username != "" and password != "":
+        correct_info = messagebox.askokcancel(title=website, message=f"These are the details you have entered:\n"
+                                              f"Email: {email_username}\nPassword: {password}\n"
+                                              f"Is it OK to save?")
+        if correct_info:
+            with open("data.txt", mode="a") as data:
+                data.write(f"{website} | {email_username} | {password}\n")
+            website_input.delete(0, END)
+            password_input.delete(0, END)
+    else:
+        messagebox.showerror(title="Incorrect information", message="Please don't leave any fields empty.")
 
 
 # Root object definition
@@ -29,7 +52,7 @@ root.resizable(width=False, height=False)
 # Canvas object definition
 canvas = Canvas(width=200, height=200, bg=WHITE, highlightthickness=0)
 logo = PhotoImage(file="logo.png")
-canvas.create_image(100, 100, image=logo)
+canvas.create_image(120, 100, image=logo)
 canvas.grid(row=0, column=1)
 
 # Widgets
@@ -41,12 +64,13 @@ website_input.focus()
 # Email/Username label
 email_username_label = Label(text="Email/Username:", font=FONT, bg=WHITE, fg=RED)
 email_username_input = Entry(width=44, highlightbackground=RED, highlightthickness=1, font=FONT)
-email_username_input.insert(0, "shuvonasir028@gmail.com")
+email_username_input.insert(0, "demo@email.com")
 
 # Password label
 password_label = Label(text="Password:", font=FONT, bg=WHITE, fg=RED)
 password_input = Entry(width=25, highlightbackground=RED, highlightthickness=1, font=FONT)
-pass_gen_button = Button(text="Generate Password", font=("Raleway", 9, "bold"), fg="white", bg=RED)
+pass_gen_button = Button(text="Generate Password", font=("Raleway", 9, "bold"), fg="white", bg=RED,
+                         command=generate_password)
 add_button = Button(text="Add Password", font=("Raleway", 9, "bold"), bg=RED, fg="white", width=44,
                     command=add_password)
 
