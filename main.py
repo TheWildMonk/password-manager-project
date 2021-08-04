@@ -38,31 +38,35 @@ def add_password():
     }
 
     if website != "" and email_username != "" and password != "":
-        try:
-            with open("data.json", mode="r") as data_file:
-                # Reading old data
-                data = json.load(data_file)
-                # Updating old data with new data
-                data.update(new_data)
-        except FileNotFoundError:
-            with open("data.json", mode="w") as data_file:
-                data = {
-                    website: {
-                        "email": email_username,
-                        "password": password,
+        correct_info = messagebox.askokcancel(title=website, message=f"These are the details you have entered:\n"
+                                                                     f"Email: {email_username}\nPassword: {password}\n"
+                                                                     f"Is it OK to save?")
+        if correct_info:
+            try:
+                with open("data.json", mode="r") as data_file:
+                    # Reading old data
+                    data = json.load(data_file)
+                    # Updating old data with new data
+                    data.update(new_data)
+            except FileNotFoundError:
+                with open("data.json", mode="w") as data_file:
+                    data = {
+                        website: {
+                            "email": email_username,
+                            "password": password,
+                        }
                     }
-                }
-                # Saving the updated data
-                json.dump(data, data_file, indent=4)
-        else:
-            with open("data.json", mode="w") as data_file:
-                # Saving the updated data
-                json.dump(data, data_file, indent=4)
-
-            website_input.delete(0, END)
-            email_username_input.delete(0, END)
-            email_username_input.insert(0, "demo@email.com")
-            password_input.delete(0, END)
+                    # Saving the updated data
+                    json.dump(data, data_file, indent=4)
+            else:
+                with open("data.json", mode="w") as data_file:
+                    # Saving the updated data
+                    json.dump(data, data_file, indent=4)
+            finally:
+                website_input.delete(0, END)
+                email_username_input.delete(0, END)
+                email_username_input.insert(0, "demo@email.com")
+                password_input.delete(0, END)
     else:
         messagebox.showerror(title="Insufficient information", message="Please don't leave any fields empty")
 
