@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 from password import Password
+import json
 
 # Colors
 WHITE = "#F9F9F9"
@@ -24,19 +25,40 @@ def generate_password():
         pass_gen_button.clipboard_append(random_password)
 
 
-# Add passwords to data.txt
+# Add passwords to data.json
 def add_password():
     website = website_input.get()
     email_username = email_username_input.get()
     password = password_input.get()
+    new_data = {
+        website: {
+            "email": email_username,
+            "password": password,
+        }
+    }
 
     if website != "" and email_username != "" and password != "":
-        correct_info = messagebox.askokcancel(title=website, message=f"These are the details you have entered:\n"
-                                              f"Email: {email_username}\nPassword: {password}\n"
-                                              f"Is it OK to save?")
-        if correct_info:
-            with open("data.txt", mode="a") as data:
-                data.write(f"{website} | {email_username} | {password}\n")
+        try:
+            with open("data.json", mode="r") as data_file:
+                # Reading old data
+                data = json.load(data_file)
+                # Updating old data with new data
+                data.update(new_data)
+        except FileNotFoundError:
+            with open("data.json", mode="w") as data_file:
+                data = {
+                    website: {
+                        "email": email_username,
+                        "password": password,
+                    }
+                }
+                # Saving the updated data
+                json.dump(data, data_file, indent=4)
+        else:
+            with open("data.json", mode="w") as data_file:
+                # Saving the updated data
+                json.dump(data, data_file, indent=4)
+
             website_input.delete(0, END)
             email_username_input.delete(0, END)
             email_username_input.insert(0, "demo@email.com")
