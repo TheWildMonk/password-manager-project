@@ -12,6 +12,47 @@ RED = "#c0392b"
 FONT = ("Raleway", 9, "bold")
 
 
+# Clear all fields
+def clear_all():
+    website_input.delete(0, END)
+    email_username_input.delete(0, END)
+    email_username_input.insert(0, "demo@email.com")
+    password_input.delete(0, END)
+
+
+# Search password
+def search_password():
+    search_data = website_input.get()
+    try:
+        with open("data.json") as data_file:
+            if data_file is None:
+                messagebox.showerror(message="No data found!")
+    except FileNotFoundError:
+        messagebox.showerror(title="No data found",
+                             message="There is no data in the database.")
+        website_input.delete(0, END)
+    else:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+            if search_data in data:
+                email = data[search_data]["email"]
+                password = data[search_data]["password"]
+                email_username_input.delete(0, END)
+                password_input.delete(0, END)
+                email_username_input.insert(0, email)
+                password_input.insert(0, password)
+                if password_input.clipboard_get() == "":
+                    password_input.clipboard_append(password)
+                else:
+                    password_input.clipboard_clear()
+                    password_input.clipboard_append(password)
+            else:
+                messagebox.showerror(title="Website not found",
+                                     message="The website you searched can not be found, please try again.")
+                website_input.delete(0, END)
+                password_input.delete(0, END)
+
+
 # Generate random password
 def generate_password():
     random_password = Password().create_password()
@@ -99,7 +140,10 @@ password_label = Label(text="Password:", font=FONT, bg=WHITE, fg=RED)
 password_input = Entry(width=25, highlightbackground=RED, highlightthickness=1, font=FONT)
 
 # Buttons
-search_button = Button(text="Search", font=("Raleway", 9, "bold"), fg="white", bg=RED, width=16)
+clear_all_button = Button(text="Clear All", font=("Raleway", 9, "bold"), fg="white", bg=RED,
+                          width=44, command=clear_all)
+search_button = Button(text="Search", font=("Raleway", 9, "bold"), fg="white", bg=RED,
+                       width=16, command=search_password)
 pass_gen_button = Button(text="Generate Password", font=("Raleway", 9, "bold"), fg="white", bg=RED,
                          command=generate_password)
 add_button = Button(text="Add Password", font=("Raleway", 9, "bold"), bg=RED, fg="white", width=44,
@@ -112,6 +156,7 @@ email_username_label.grid(row=2, column=0)
 email_username_input.grid(row=2, column=1, columnspan=2, sticky="e", pady=2)
 password_label.grid(row=3, column=0)
 password_input.grid(row=3, column=1)
+clear_all_button.grid(row=5, column=0, columnspan=3, sticky="e", pady=2)
 search_button.grid(row=1, column=2, pady=2)
 pass_gen_button.grid(row=3, column=2, sticky="e", pady=2)
 add_button.grid(row=4, column=0, columnspan=3, sticky="e", pady=2)
