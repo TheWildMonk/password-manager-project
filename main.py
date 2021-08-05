@@ -86,7 +86,7 @@ canvas.grid(row=0, column=1)
 # Widgets
 # Website label
 website_label = Label(text="Website:", font=FONT, bg=WHITE, fg=RED)
-website_input = Entry(width=44, highlightbackground=RED, highlightthickness=1, font=FONT)
+website_input = Entry(width=25, highlightbackground=RED, highlightthickness=1, font=FONT)
 website_input.focus()
 
 # Email/Username label
@@ -97,6 +97,9 @@ email_username_input.insert(0, "demo@email.com")
 # Password label
 password_label = Label(text="Password:", font=FONT, bg=WHITE, fg=RED)
 password_input = Entry(width=25, highlightbackground=RED, highlightthickness=1, font=FONT)
+
+# Buttons
+search_button = Button(text="Search", font=("Raleway", 9, "bold"), fg="white", bg=RED, width=16)
 pass_gen_button = Button(text="Generate Password", font=("Raleway", 9, "bold"), fg="white", bg=RED,
                          command=generate_password)
 add_button = Button(text="Add Password", font=("Raleway", 9, "bold"), bg=RED, fg="white", width=44,
@@ -104,11 +107,12 @@ add_button = Button(text="Add Password", font=("Raleway", 9, "bold"), bg=RED, fg
 
 # Grids
 website_label.grid(row=1, column=0)
-website_input.grid(row=1, column=1, columnspan=2, sticky="e", pady=2)
+website_input.grid(row=1, column=1)
 email_username_label.grid(row=2, column=0)
 email_username_input.grid(row=2, column=1, columnspan=2, sticky="e", pady=2)
 password_label.grid(row=3, column=0)
 password_input.grid(row=3, column=1)
+search_button.grid(row=1, column=2, pady=2)
 pass_gen_button.grid(row=3, column=2, sticky="e", pady=2)
 add_button.grid(row=4, column=0, columnspan=3, sticky="e", pady=2)
 
