@@ -38,7 +38,7 @@ def search_password():
             password_input.delete(0, END)
             email_username_input.insert(0, email)
             password_input.insert(0, password)
-            messagebox.showinfo(title="Email & Password", message=f"Email: {email}\nPassword: {password}")
+            messagebox.showinfo(title=f"{website_input.get()}", message=f"Email: {email}\nPassword: {password}")
             search_button.clipboard_clear()
             search_button.clipboard_append(password)
         else:
