@@ -25,32 +25,26 @@ def search_password():
     search_data = website_input.get()
     try:
         with open("data.json") as data_file:
-            if data_file is None:
-                messagebox.showerror(message="No data found!")
-    except FileNotFoundError:
+            data = json.load(data_file)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
         messagebox.showerror(title="No data found",
                              message="There is no data in the database.")
         website_input.delete(0, END)
     else:
-        with open("data.json") as data_file:
-            data = json.load(data_file)
-            if search_data in data:
-                email = data[search_data]["email"]
-                password = data[search_data]["password"]
-                email_username_input.delete(0, END)
-                password_input.delete(0, END)
-                email_username_input.insert(0, email)
-                password_input.insert(0, password)
-                if password_input.clipboard_get() == "":
-                    password_input.clipboard_append(password)
-                else:
-                    password_input.clipboard_clear()
-                    password_input.clipboard_append(password)
-            else:
-                messagebox.showerror(title="Website not found",
-                                     message="The website you searched can not be found, please try again.")
-                website_input.delete(0, END)
-                password_input.delete(0, END)
+        if search_data in data:
+            email = data[search_data]["email"]
+            password = data[search_data]["password"]
+            email_username_input.delete(0, END)
+            password_input.delete(0, END)
+            email_username_input.insert(0, email)
+            password_input.insert(0, password)
+            messagebox.showinfo(title="Email & Password", message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showerror(title="Website not found",
+                                 message="The website you searched can not be found, please try again.")
+    finally:
+        website_input.delete(0, END)
+        password_input.delete(0, END)
 
 
 # Generate random password
@@ -89,16 +83,10 @@ def add_password():
                     data = json.load(data_file)
                     # Updating old data with new data
                     data.update(new_data)
-            except FileNotFoundError:
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
                 with open("data.json", mode="w") as data_file:
-                    data = {
-                        website: {
-                            "email": email_username,
-                            "password": password,
-                        }
-                    }
                     # Saving the updated data
-                    json.dump(data, data_file, indent=4)
+                    json.dump(new_data, data_file, indent=4)
             else:
                 with open("data.json", mode="w") as data_file:
                     # Saving the updated data
