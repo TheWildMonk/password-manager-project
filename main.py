@@ -39,6 +39,8 @@ def search_password():
             email_username_input.insert(0, email)
             password_input.insert(0, password)
             messagebox.showinfo(title="Email & Password", message=f"Email: {email}\nPassword: {password}")
+            search_button.clipboard_clear()
+            search_button.clipboard_append(password)
         else:
             messagebox.showerror(title="Website not found",
                                  message="The website you searched can not be found, please try again.")
